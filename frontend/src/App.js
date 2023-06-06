@@ -1,22 +1,33 @@
-import React, { Component } from 'react';
+import React from 'react';
+import logo from './logo.svg';
 import './App.css';
-import Home from './Home';
-import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
-import ClientList from './ClientList';
-import ClientEdit from "./ClientEdit";
+import {BrowserRouter as Router, Route, Switch} from 'react-router-dom'
+import ListClientComponent from './components/ListClientComponent';
+import HeaderComponent from './components/HeaderComponent';
+import FooterComponent from './components/FooterComponent';
+import CreateClientComponent from './components/CreateClientComponent';
+import ViewClientComponent from './components/ViewClientComponent';
 
-class App extends Component {
-  render() {
-    return (
+function App() {
+  return (
+    <div>
         <Router>
-          <Switch>
-            <Route path='/' exact={true} component={Home}/>
-            <Route path='/clients' exact={true} component={ClientList}/>
-            <Route path='/clients/:id' component={ClientEdit}/>
-          </Switch>
+              <HeaderComponent />
+                <div className="container">
+                    <Switch> 
+                          <Route path = "/" exact component = {ListClientComponent}></Route>
+                          <Route path = "/clients" component = {ListClientComponent}></Route>
+                          <Route path = "/add-client/:id" component = {CreateClientComponent}></Route>
+                          <Route path = "/view-client/:id" component = {ViewClientComponent}></Route>
+                          {/* <Route path = "/update-client/:id" component = {UpdateClientComponent}></Route> */}
+                    </Switch>
+                </div>
+              <FooterComponent />
         </Router>
-    )
-  }
+    </div>
+    
+  );
 }
 
 export default App;
+

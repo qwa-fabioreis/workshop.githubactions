@@ -3,6 +3,7 @@ package br.com.qwasolucoes.workshop.githubactions.controller;
 import br.com.qwasolucoes.workshop.githubactions.domain.Client;
 import br.com.qwasolucoes.workshop.githubactions.repository.ClientRepository;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -18,6 +19,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/clients")
+@CrossOrigin(maxAge = 3600)
 public class ClientController {
     private final ClientRepository repository;
 
@@ -37,15 +39,15 @@ public class ClientController {
         Client savedClient = repository.save(client);
         return ResponseEntity.created(new URI("/clients/" + savedClient.getId())).body(savedClient);
     }
-
     @PutMapping("/{id}")
     public ResponseEntity updateClient(@PathVariable Long id, @RequestBody Client client){
         Client currentClient = repository.findById(id).orElseThrow(RuntimeException::new);
         currentClient.setName(client.getName());
         currentClient.setEmail(client.getEmail());
-        currentClient = repository.save(client);
 
-        return ResponseEntity.ok(currentClient);
+        Client clientUpDated = repository.saveAndFlush(currentClient);
+
+        return ResponseEntity.ok(clientUpDated);
     }
 
     @DeleteMapping("/{id}")
