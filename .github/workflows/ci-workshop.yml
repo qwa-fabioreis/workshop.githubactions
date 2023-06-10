@@ -21,11 +21,19 @@ jobs:
           username: ${{ secrets.DOCKERHUB_USERNAME }}
           password: ${{ secrets.DOCKERHUB_TOKEN }}
       -
-        name: Build and push
+        name: Build and push back
         uses: docker/build-push-action@v3
         with:
           context: "{{defaultContext}}"
           push: true
           tags: |
             fabiopereirareis/githubactions-back:latest
+      -
+        name: Build and push front
+        uses: docker/build-push-action@v3
+        with:
+          context: "{{defaultContext}}:frontend"
+          push: true
+          tags: |
+            fabiopereirareis/githubactions-front:latest
         # fabiopereirareis/githubactions-back:v.0.${{github.run_number}}
