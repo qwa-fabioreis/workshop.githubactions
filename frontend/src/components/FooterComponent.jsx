@@ -14,7 +14,7 @@ class FooterComponent extends Component {
         return (
             <div>
                 <footer className = "footer text-center">
-                    <span className="text-muted">Workshop QWA Soluções.</span>
+                    <span className="text-muted">Java</span>
                 </footer>
             </div>
         )
