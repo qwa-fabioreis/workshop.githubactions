@@ -3,7 +3,7 @@ services:
   api:
     container_name: api
     restart: always
-    image: fabiopereirareis/githubactions-back:v2
+    image: fabiopereirareis/githubactions-back
     ports:
       - 8080:8080
     depends_on:
