@@ -3,11 +3,15 @@ services:
   api:
     container_name: api
     restart: always
-    image: fabiopereirareis/githubactions-back
+    image: fabiopereirareis/githubactions-back:v2
     ports:
       - 8080:8080
     depends_on:
-      - postgres
+      postgres:
+        condition: service_healthy
+    networks:
+      - docker_net
+    
     environment:
       - SPRING_PROFILES_ACTIVE=docker
 
@@ -21,7 +25,7 @@ services:
       - api
 
   postgres:
-    container_name: postgres
+    container_name: postgres_db
     restart: always
     image: postgres:15
     volumes:
@@ -35,6 +39,28 @@ services:
       test: "exit 0"
     ports:
       - "5432:5432"
+    networks:
+      - docker_net
+
+  pgadmin:
+    image: dpage/pgadmin4:latest
+    container_name: pgadmin
+    restart: always
+    depends_on:
+      postgres:
+        condition: service_healthy
+    environment:
+      PGADMIN_DEFAULT_EMAIL: qwa@solucoes.com.br
+      PGADMIN_DEFAULT_PASSWORD: password
+    ports:
+      - 8070:80
+    volumes:
+      - pgadmin:/var/lib/pgadmin
+    networks:
+    - docker_net
 
 volumes:
   postgres_data:
+  pgadmin:
+networks:
+  docker_net:
