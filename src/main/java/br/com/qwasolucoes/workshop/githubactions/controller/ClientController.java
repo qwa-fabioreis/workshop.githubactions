@@ -32,6 +32,7 @@ public class ClientController {
     }
     @GetMapping
     public List<Client> getClients(){
+        logger.debug("Entrou no metodo que lista todos clientes");
         logger.info("Listando todos clientes");
         return repository.findAll();
     }
