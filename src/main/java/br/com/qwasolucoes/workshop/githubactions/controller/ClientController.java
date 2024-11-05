@@ -38,17 +38,21 @@ public class ClientController {
     @GetMapping("/{id}")
     public Client getClient(@PathVariable Long id){
         logger.info("Trazendo cliente com id: " + id);
+
         return repository.findById(id).orElseThrow(RuntimeException::new);
     }
     @PostMapping
     public ResponseEntity createClient(@RequestBody Client client) throws URISyntaxException{
         Client savedClient = repository.save(client);
-        logger.info("Salvndo novo cliente");
+        logger.info("Salvando novo cliente");
         return ResponseEntity.created(new URI("/clients/" + savedClient.getId())).body(savedClient);
     }
     @PutMapping("/{id}")
     public ResponseEntity updateClient(@PathVariable Long id, @RequestBody Client client){
-        Client currentClient = repository.findById(id).orElseThrow(RuntimeException::new);
+        Client currentClient = repository.findById(id).orElseThrow(() -> {
+            logger.error("Cliente com id {} não encontrado :(", id);
+            return new RuntimeException("Cliente não encontrado");
+        });
         currentClient.setName(client.getName());
         currentClient.setEmail(client.getEmail());
         Client clientUpDated = repository.saveAndFlush(currentClient);
@@ -56,7 +60,6 @@ public class ClientController {
         logger.info("Atualizando cliente com id: " + id);
         return ResponseEntity.ok(clientUpDated);
     }
-
     @DeleteMapping("/{id}")
     public ResponseEntity deleteClient(@PathVariable Long id){
         repository.deleteById(id);
