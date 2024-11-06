@@ -1,5 +1,5 @@
 <configuration scan="true" scanPeriod="15 seconds">
-    <property name="LOG_DIR" value="src/main/resources" />
+    <property name="LOG_DIR" value="./logs" />
     <property name="LOG_FILE" value="meu-log" />
     <property name="LOG_FILE_NEGOCIOS" value="negocios" />
 
