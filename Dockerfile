@@ -8,7 +8,9 @@ RUN mvn -f /app/pom.xml clean package install -DskipTests
 FROM openjdk:17.0.1-jdk-slim                              
 
 
-COPY --from=build app/target/workshop.githubactions.jar /app-service/workshop.githubactions.jar   
+COPY --from=build app/target/workshop.githubactions.jar /app-service/workshop.githubactions.jar
+COPY --from=build app/src/main/resources/logback.xml /app/logback.xml
+
 WORKDIR /app-service
 
 EXPOSE 8080

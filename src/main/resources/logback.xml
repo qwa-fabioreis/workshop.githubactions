@@ -1,0 +1,58 @@
+<configuration scan="true" scanPeriod="15 seconds">
+    <property name="LOG_DIR" value="./logs" />
+    <property name="LOG_FILE" value="meu-log" />
+    <property name="LOG_FILE_NEGOCIOS" value="negocios" />
+
+    <appender name="FILE_MEU_LOG" class="ch.qos.logback.core.FileAppender">
+        <file>${LOG_DIR}/${LOG_FILE}.log</file>
+        <encoder>
+            <pattern>%d{dd:MM:yyyy:HH:mm:ss.SSS} [%thread] %-5level %logger{36} - %msg%n</pattern>
+        </encoder>
+    </appender>
+
+    <appender name="FILE_NEGOCIOS_LOG" class="ch.qos.logback.core.FileAppender">
+        <file>${LOG_DIR}/${LOG_FILE_NEGOCIOS}.log</file>
+        <encoder>
+            <pattern>%d{dd:MM:yyyy:HH:mm:ss.SSS} [%thread] %-5level %logger{36} - %msg%n</pattern>
+        </encoder>
+    </appender>
+
+    <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
+        <encoder>
+            <pattern>%d{HH:mm:ss.SSS} [%thread] %-5level %logger{36} - %msg%n</pattern>
+        </encoder>
+    </appender>
+
+<!--    <appender name="FILE" class="ch.qos.logback.core.FileAppender">-->
+<!--        <file>tests.log</file>-->
+<!--        <append>true</append>-->
+<!--        <encoder>-->
+<!--            <pattern>%d{HH:mm:ss.SSS} [%thread] %-5level %logger{35} - %msg%n</pattern>-->
+<!--        </encoder>-->
+<!--    </appender>-->
+
+<!--    <appender name="LOKI" class="com.github.loki4j.logback.Loki4jAppender">-->
+<!--        <http>-->
+<!--            <url>http://localhost:3100/loki/api/v1/push</url>-->
+<!--        </http>-->
+<!--        <format>-->
+<!--            <label>-->
+<!--                <pattern>app=my-app,host=${HOSTNAME}</pattern>-->
+<!--            </label>-->
+<!--            <message>-->
+<!--                <pattern>%-5level [%.5(${HOSTNAME})] %.10thread %logger{20} | %msg %ex</pattern>-->
+<!--            </message>-->
+<!--        </format>-->
+<!--    </appender>-->
+
+<!--    <logger name="com.workshop.workshopLog.controllers.LogController" level="ERROR" >-->
+<!--        <appender-ref ref="FILE_MEU_LOG" />-->
+<!--    </logger>-->
+    <logger name="br.com.qwasolucoes.workshop.githubactions.controller" level="INFO" >
+        <appender-ref ref="FILE_NEGOCIOS_LOG" />
+    </logger>
+    <root level="INFO">
+<!--        <appender-ref ref="LOKI" />-->
+        <appender-ref ref="STDOUT" />
+    </root>
+</configuration>
